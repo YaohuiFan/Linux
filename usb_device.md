@@ -15,4 +15,7 @@
 - ``/dev/bus/usb``
 - ``/sys/bus/usb/devices``
 
+## What is "ttyUSB"?
+
+"ttyUSB0" means "USB serial port adapter" and the "0" is the device number. "ttyUSB0" is the first adapter attached, so the next one will be allocated as "ttyUSB1". 
 

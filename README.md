@@ -1,3 +1,3 @@
 # Linux
 
-The place covers all aspects of Linux I learned.
+Repo of all aspects of Linux I learned.

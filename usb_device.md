@@ -19,3 +19,5 @@
 
 "ttyUSB0" means "USB serial port adapter" and the "0" is the device number. "ttyUSB0" is the first adapter attached, so the next one will be allocated as "ttyUSB1". 
 
+## Writing udev rule for USB devices
+Learn from [here](https://linuxconfig.org/tutorial-on-how-to-write-basic-udev-rules-in-linux)

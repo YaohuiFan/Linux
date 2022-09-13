@@ -10,10 +10,12 @@
 
 - `$ udevadm` -- e.g. `$ udevadm info -q property --export -n /dev/bus/usb/001/001`
 
+- `$ lspic` -- to list all PCI devices, including the "USB controller" e.g. "00:14.0 USB controller: Inter Corporation 200 Series/Z370 Chipset Family USB 3.0 xHCI Controller" which should be listed under ``/sys/devices/pci0000:00/`` directory 
+
 ## related paths
 
 - ``/dev/bus/usb``
-- ``/sys/bus/usb/devices``
+- ``/sys/bus/usb/devices/``
 
 ## What is "ttyUSB"?
 

@@ -17,7 +17,9 @@
 - ``/dev/bus/usb``
 - ``/sys/bus/usb/devices/``
 
-## What is "ttyUSB"?
+##  ["ttyACM" and "ttyUSB"?](https://rfc1149.net/blog/2013/03/05/what-is-the-difference-between-devttyusbx-and-devttyacmx/)
+
+"ttyACM", abstract control model.
 
 "ttyUSB0" means "USB serial port adapter" and the "0" is the device number. "ttyUSB0" is the first adapter attached, so the next one will be allocated as "ttyUSB1". 
 

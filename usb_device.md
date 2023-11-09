@@ -27,3 +27,8 @@
 URLs:
 - [1](https://linuxconfig.org/tutorial-on-how-to-write-basic-udev-rules-in-linux)
 - [2](https://weinimo.github.io/how-to-write-udev-rules-for-usb-devices.html)
+
+Udev rules are defined into files with extension `.rules`. There are two main locations in which the files usually can be placed: `/usr/lib/udev/rules.d` is the directory used for storing system-installed rules, and `/etc/udev/rules.d` is to keep user created rules.
+
+### prefixed number
+The files in which the rules are defined are conventionally named with a number as prefix (e.g `88-usb.rules`) and are processed in lexical order independently of the directory they are in. Files defined in `/etc/udev/rules.d` will override the files with the same name installed in the system default path.

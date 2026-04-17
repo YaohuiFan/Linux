@@ -11,7 +11,6 @@ RUN_FOLDER="run_$(date '+%Y%m%d')"
 DEST_DIR="$DEST_BASE/$RUN_FOLDER"
 MARKER_FILE="/var/log/camera_sync/last_copy_to_ssd_a.marker"
 LOG_FILE="/var/log/camera_sync/copy_to_ssd_a.log"
-
 # Create directories if they don't exist
 mkdir -p "$(dirname "$MARKER_FILE")"
 mkdir -p "$(dirname "$LOG_FILE")"

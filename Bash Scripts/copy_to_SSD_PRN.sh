@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Script to copy new camera captures to SSD for PRN
+# Script to copy NEW camera captures to SSD for PRN
 # Runs manually or every 2 days via cron
 
 SOURCE_DIR="/nssams/run/capture"
 DEST_BASE="/media/nssams/4TB.02"
 
 # Create dated subfolder: run_YYYYMMDD
-RUN_FOLDER="run_$(date '+%Y%m%d')"
-DEST_DIR="$DEST_BASE/$RUN_FOLDER"
-MARKER_FILE="/var/log/camera_sync/last_copy_to_ssd_a.marker"
-LOG_FILE="/var/log/camera_sync/copy_to_ssd_a.log"
+RUN_FOLDER="run-$(date '+%Y%m%d')"
+DEST_DIR="$DEST_BASE/$RUN_FOLDER/capture"       
+MARKER_FILE="/nssams/run/logs/backup/last_copy_to_ssd_PRN.marker"
+LOG_FILE="/nssams/run/logs/backup/copy_to_ssd_PRN.log"
 # Create directories if they don't exist
 mkdir -p "$(dirname "$MARKER_FILE")"
 mkdir -p "$(dirname "$LOG_FILE")"
@@ -62,14 +62,45 @@ RSYNC_EXIT=$?
 if [ $RSYNC_EXIT -eq 0 ]; then
     # Update marker file
     touch "$MARKER_FILE"
-    log_message "Copy completed successfully"
+    log_message "Copy captured files completed successfully"
 
     # Calculate space used
     SPACE_USED=$(du -sh "$DEST_DIR" 2>/dev/null | cut -f1)
-    log_message "SSD-A total space used: $SPACE_USED"
+    log_message "SSD-4TB.02 total space used: $SPACE_USED"
 else
     log_message "ERROR: rsync failed with exit code $RSYNC_EXIT"
     exit 1
 fi
+
+# copy data & log files ...
+DEST_ROOT="$DEST_BASE/$RUN_FOLDER"
+if ! rsync -aLv /nssams/config/ "$DEST_ROOT/config/"; then
+    log_message "ERROR: Failed to copy config directory"
+    exit 1
+fi
+if ! rsync -aLv /nssams/dashboard/ "$DEST_ROOT/dashboard/"; then
+    log_message "ERROR: Failed to copy dashboard directory"
+    exit 1
+fi
+if ! rsync -aLV /nssams/run/logs/ "$DEST_ROOT/logs/"; then
+    log_message "ERROR: Failed to copy logs directory"
+    exit 1
+fi
+if ! rsync -aLv /nssams/run/data/ "$DEST_ROOT/data/"; then
+    log_message "ERROR: Failed to copy data directory"
+    exit 1
+fi
+if ! rsync -aLv /nssams/scripts/ "$DEST_ROOT/scripts/"; then
+    log_message "ERROR: Failed to copy scripts directory"
+    exit 1
+fi
+if ! rsync -aLv /nssams/src/ "$DEST_ROOT/src/"; then
+    log_message "ERROR: Failed to copy src directory"
+    exit 1
+fi
+
+# Calculate space used
+SPACE_USED=$(du -sh "$DEST_ROOT" 2>/dev/null | cut -f1)
+log_message "SSD-4TB.02 total space used: $SPACE_USED"
 
 log_message "=== Copy to SSD-4TB.02 finished ==="
